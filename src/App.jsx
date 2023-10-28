@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Board from "./components/Board";
 import { calculateWinner } from "./components/winner";
+import Statusbar from "./components/Statusbar";
 
 function App() {
   const [newIndex, setNewIndex] = useState(Array(9).fill(null));
@@ -22,20 +23,18 @@ function App() {
     setIsOpponents(!isOpponents);
   };
 
-  console.log(winner);
   const reset = () => {
     setNewIndex(Array(9).fill(null));
     setIsOpponents(true);
   };
   return (
-    <div className="h-screen flex flex-col justify-center items-center bg-purple-50">
-      <h1 className="text-6xl font-semibold mb-4">Tic Tac To</h1>
-
-      <span className={`my-2 text-xl`}>
-        {winner.winner
-          ? `Winner is ${winner.winner}`
-          : ` Next ${isOpponents ? " player X" : "player O"}`}
-      </span>
+    <div className="h-screen flex flex-col justify-center items-center bg-purple-50 select-none">
+      <h1 className="text-6xl font-semibold my-6">Tic Tac To</h1>
+      <Statusbar
+        isOpponents={isOpponents}
+        winner={winner.winner}
+        newIndex={newIndex}
+      />
       <Board newIndex={newIndex} handleClick={handleClick} reset={reset} />
     </div>
   );
